@@ -36,6 +36,5 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     );
   }
 
-  // Render children only if authenticated
   return isAuthenticated ? <>{children}</> : null;
 }

@@ -164,7 +164,7 @@ export default function Dashboard() {
             value={repoStats.totalRepos}
             change="+5%"
             trend="up"
-            color="purple"
+            color="orange"
             icon={
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -262,7 +262,7 @@ export default function Dashboard() {
             type="area"
             dataKeys={["commits", "pipelines"]}
             labels={{ commits: "Commits", pipelines: "Pipeline Runs" }}
-            colors={["#8b5cf6", "#c4b5fd"]}
+            colors={["#f28500", "#ffb266"]}
           />
           <ActivityChart
             data={languageData}
@@ -271,7 +271,7 @@ export default function Dashboard() {
             type="bar"
             dataKeys={["value"]}
             labels={{ value: "Distribution %" }}
-            colors={["#8b5cf6", "#c4b5fd", "#a78bfa", "#ddd6fe", "#ede9fe"]}
+            colors={["#f28500", "#ffb266", "#ff9933", "#ffcc99", "#ffe6cc"]}
           />
         </div>
 

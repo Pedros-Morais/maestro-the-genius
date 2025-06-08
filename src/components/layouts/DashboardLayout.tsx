@@ -56,7 +56,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 18c-4.51 2-5-2-7-2" />
         </svg>
       ),
-      href: '/repos'
+      href: '/dashboard/repos'
     },
     {
       name: 'Usuarios',
