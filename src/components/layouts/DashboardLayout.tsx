@@ -78,23 +78,31 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     const path = pathname || '/';
     console.log('Current path:', path);
     
-    // Direct mapping for exact matches
-    if (path === '/dashboard/pipelines') {
-      console.log('Pipeline path exact match');
-      setActiveItem('Pipelines');
-      return;
+    // Simple direct path comparison, most reliable approach
+    let currentPageName = '';
+    
+    // Special case for dashboard root
+    if (path === '/dashboard') {
+      currentPageName = 'Dashboard';
+    } else {
+      // For other pages, extract the last path segment
+      const pathParts = path.split('/');
+      const lastSegment = pathParts[pathParts.length - 1];
+      
+      // Map path segment to nav item
+      const pathToNavMap: Record<string, string> = {
+        'pipelines': 'Pipelines',
+        'integracoes': 'Integracoes',
+        'repos': 'Repos',
+        'usuarios': 'Usuarios'
+      };
+      
+      // Check if lastSegment is a key in pathToNavMap before accessing it
+      currentPageName = lastSegment in pathToNavMap ? pathToNavMap[lastSegment] : 'Dashboard';
     }
     
-    const matchedItem = navItems.find((item) => {
-      const matches = item.href === '/' ? path === '/' : path.startsWith(item.href);
-      console.log(`Checking ${item.name} (${item.href}):`, matches);
-      return matches;
-    });
-    
-    if (matchedItem) {
-      console.log('Matched item:', matchedItem.name);
-      setActiveItem(matchedItem.name);
-    }
+    console.log('Setting active item to:', currentPageName);
+    setActiveItem(currentPageName);
   }, [pathname]);
 
   return (
