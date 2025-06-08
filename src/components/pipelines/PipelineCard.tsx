@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface PipelineCardProps {
   id: string;
@@ -19,6 +19,8 @@ interface PipelineCardProps {
     skipped: number;
   };
   delay?: number;
+  showDetails: boolean;
+  onToggleDetails: () => void;
 }
 
 export default function PipelineCard({
@@ -32,9 +34,10 @@ export default function PipelineCard({
   averageRuntime,
   successRate,
   qaStatus,
-  delay = 0
+  delay = 0,
+  showDetails,
+  onToggleDetails
 }: PipelineCardProps) {
-  const [showDetails, setShowDetails] = useState(false);
 
   const getStatusColor = (status: string) => {
     switch(status) {
@@ -90,10 +93,10 @@ export default function PipelineCard({
 
   return (
     <motion.div
-      className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-700"
+      className={`bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden h-auto flex flex-col`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: delay * 0.1 }}
+      transition={{ duration: 0.3, delay: delay * 0.1 }}
     >
       <div className="p-5">
         <div className="flex items-center justify-between">
@@ -134,7 +137,7 @@ export default function PipelineCard({
             
             <div className="flex space-x-2">
               <button
-                onClick={() => setShowDetails(!showDetails)}
+                onClick={onToggleDetails}
                 className="text-xs font-medium text-[#f28500] hover:text-[#ff9d37] transition-colors"
               >
                 {showDetails ? 'Menos Detalhes' : 'Mais Detalhes'}
@@ -153,80 +156,109 @@ export default function PipelineCard({
         </div>
       </div>
 
-      {showDetails && (
-        <motion.div 
-          className="p-5 bg-gray-50 dark:bg-gray-750 border-t border-gray-100 dark:border-gray-700"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <AnimatePresence mode="wait">
+        {showDetails && (
+          <motion.div 
+            className="p-5 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-100 dark:border-gray-700"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            style={{ overflow: 'hidden' }}
+          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-medium text-sm mb-2">Detalhes do Pipeline</h4>
-              <ul className="text-sm space-y-2">
-                <li className="flex justify-between">
+              <h4 className="font-medium text-sm mb-3 text-[#f28500]">Detalhes do Pipeline</h4>
+              <ul className="text-sm space-y-3 bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+                <li className="flex justify-between items-center py-1.5 px-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <span className="text-gray-500 dark:text-gray-400">ID:</span> 
-                  <span>{id}</span>
+                  <span className="font-medium">{id}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-center py-1.5 px-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <span className="text-gray-500 dark:text-gray-400">Tipo:</span> 
-                  <span>{type}</span>
+                  <span className="font-medium">{type}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-center py-1.5 px-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <span className="text-gray-500 dark:text-gray-400">Tempo médio:</span> 
-                  <span>{averageRuntime}</span>
+                  <span className="font-medium">{averageRuntime}</span>
                 </li>
-                <li className="flex justify-between">
+                <li className="flex justify-between items-center py-1.5 px-1 rounded hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <span className="text-gray-500 dark:text-gray-400">Taxa de sucesso:</span> 
-                  <span>{successRate}%</span>
+                  <span className="font-medium text-green-600 dark:text-green-400">{successRate}%</span>
                 </li>
               </ul>
             </div>
             
             <div>
-              <h4 className="font-medium text-sm mb-2">Recursos Lambda</h4>
-              <ul className="text-sm space-y-2">
-                <li>
+              <h4 className="font-medium text-sm mb-3 text-[#f28500]">Recursos Lambda</h4>
+              <ul className="text-sm space-y-3 bg-white dark:bg-gray-800 p-3 rounded-lg border border-gray-200 dark:border-gray-700">
+                <li className="mb-2">
                   <a href={`https://console.aws.amazon.com/lambda/home#/functions/function:${id}`} target="_blank" rel="noopener noreferrer" 
-                    className="text-[#f28500] hover:text-[#ff9d37] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 mr-2">
-                      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                      <polyline points="15 3 21 3 21 9"></polyline>
-                      <line x1="10" y1="14" x2="21" y2="3"></line>
-                    </svg>
-                    Ver função Lambda
+                    className="bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-900/20 p-2 rounded-lg flex items-center transition-colors border border-gray-100 dark:border-gray-700">
+                    <div className="p-1.5 bg-orange-100 dark:bg-orange-900/30 rounded-md mr-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#f28500]">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                        <polyline points="15 3 21 3 21 9"></polyline>
+                        <line x1="10" y1="14" x2="21" y2="3"></line>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Ver função Lambda</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Gerenciar código e configuração</p>
+                    </div>
                   </a>
                 </li>
-                <li>
+                <li className="mb-2">
                   <a href={`https://console.aws.amazon.com/cloudwatch/home#logsV2:log-groups/log-group/%2Faws%2Flambda%2F${id}`} target="_blank" rel="noopener noreferrer"
-                    className="text-[#f28500] hover:text-[#ff9d37] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 mr-2">
-                      <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
-                      <path d="M17 21h-10a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"></path>
-                      <line x1="9" y1="9" x2="10" y2="9"></line>
-                      <line x1="9" y1="13" x2="15" y2="13"></line>
-                      <line x1="9" y1="17" x2="15" y2="17"></line>
-                    </svg>
-                    Ver CloudWatch Logs
+                    className="bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-900/20 p-2 rounded-lg flex items-center transition-colors border border-gray-100 dark:border-gray-700">
+                    <div className="p-1.5 bg-orange-100 dark:bg-orange-900/30 rounded-md mr-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#f28500]">
+                        <path d="M14 3v4a1 1 0 0 0 1 1h4"></path>
+                        <path d="M17 21h-10a2 2 0 0 1-2-2v-14a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"></path>
+                        <line x1="9" y1="9" x2="10" y2="9"></line>
+                        <line x1="9" y1="13" x2="15" y2="13"></line>
+                        <line x1="9" y1="17" x2="15" y2="17"></line>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Ver CloudWatch Logs</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Monitorar registros de execução</p>
+                    </div>
                   </a>
                 </li>
-                <li>
+                <li className="mb-2">
                   <a href={`https://console.aws.amazon.com/cloudwatch/home#dashboards:name=${id}`} target="_blank" rel="noopener noreferrer"
-                    className="text-[#f28500] hover:text-[#ff9d37] transition-colors flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 mr-2">
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                      <line x1="3" y1="9" x2="21" y2="9"></line>
-                      <line x1="9" y1="21" x2="9" y2="9"></line>
-                    </svg>
-                    Ver Dashboard de Métricas
+                    className="bg-white dark:bg-gray-800 hover:bg-orange-50 dark:hover:bg-orange-900/20 p-2 rounded-lg flex items-center transition-colors border border-gray-100 dark:border-gray-700">
+                    <div className="p-1.5 bg-orange-100 dark:bg-orange-900/30 rounded-md mr-3">
+                      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-[#f28500]">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900 dark:text-gray-100">Ver Dashboard</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">Análise de métricas e performance</p>
+                    </div>
                   </a>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div className="mt-4">
-            <h4 className="font-medium text-sm mb-2">Resultados de QA</h4>
+          <div className="mt-6">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="font-medium text-sm text-[#f28500]">Resultados de QA</h4>
+              <button 
+                onClick={() => alert('Iniciando testes TDD...')}
+                className="bg-[#f28500] hover:bg-[#ff9d37] text-white px-4 py-1.5 rounded-md text-xs font-medium transition-colors flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5 mr-1.5">
+                  <path d="m5 3 14 9-14 9V3z"></path>
+                </svg>
+                  Baixar TDD
+              </button>
+            </div>
             <div className="bg-white dark:bg-gray-800 rounded-md overflow-hidden border border-gray-200 dark:border-gray-700">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-700">
@@ -274,6 +306,7 @@ export default function PipelineCard({
           </div>
         </motion.div>
       )}
+      </AnimatePresence>
     </motion.div>
   );
 }

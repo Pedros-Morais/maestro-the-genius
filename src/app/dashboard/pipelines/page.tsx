@@ -108,6 +108,12 @@ export default function PipelinesPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [typeFilter, setTypeFilter] = useState('all');
+  const [openCardId, setOpenCardId] = useState<string | null>(null);
+  
+  // Toggle card open/closed
+  const toggleCardDetails = (id: string) => {
+    setOpenCardId(openCardId === id ? null : id);
+  };
 
   // Filter pipelines based on search term and filters
   const filteredPipelines = MOCK_PIPELINES.filter(pipeline => {
@@ -145,7 +151,7 @@ export default function PipelinesPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-auto">
           <div className="relative">
             <input
               type="text"
@@ -226,23 +232,26 @@ export default function PipelinesPage() {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="flex flex-wrap gap-6">
         {filteredPipelines.length > 0 ? (
           filteredPipelines.map((pipeline, index) => (
-            <PipelineCard
-              key={pipeline.id}
-              id={pipeline.id}
-              name={pipeline.name}
-              status={pipeline.status as 'success' | 'running' | 'failed' | 'warning'}
-              lastRunTime={pipeline.lastRunTime}
-              lastRunBy={pipeline.lastRunBy}
-              type={pipeline.type}
-              description={pipeline.description}
-              averageRuntime={pipeline.averageRuntime}
-              successRate={pipeline.successRate}
-              qaStatus={pipeline.qaStatus}
-              delay={index}
-            />
+            <div key={pipeline.id} className="w-full lg:w-[calc(50%-12px)] flex-grow-0 flex-shrink-0">
+              <PipelineCard
+                id={pipeline.id}
+                name={pipeline.name}
+                status={pipeline.status as 'success' | 'running' | 'failed' | 'warning'}
+                lastRunTime={pipeline.lastRunTime}
+                lastRunBy={pipeline.lastRunBy}
+                type={pipeline.type}
+                description={pipeline.description}
+                averageRuntime={pipeline.averageRuntime}
+                successRate={pipeline.successRate}
+                qaStatus={pipeline.qaStatus}
+                delay={index}
+                showDetails={openCardId === pipeline.id}
+                onToggleDetails={() => toggleCardDetails(pipeline.id)}
+              />
+            </div>
           ))
         ) : (
           <motion.div 
