@@ -46,7 +46,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <rect x="3" y="16" width="7" height="5" rx="1" stroke="currentColor" strokeWidth="2" />
         </svg>
       ),
-      href: '/'
+      href: '/dashboard'
     },
     {
       name: 'Repos',
@@ -65,7 +65,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
         </svg>
       ),
-      href: '/usuarios'
+      href: '/dashboard/usuarios'
     },
     {
       name: 'Pipelines',
@@ -74,7 +74,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
         </svg>
       ),
-      href: '/pipelines'
+      href: '/dashboard/pipelines'
     },
     {
       name: 'Integracoes',
@@ -83,7 +83,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
         </svg>
       ),
-      href: '/integracoes'
+      href: '/dashboard/integracoes'
     },
   ];
 
@@ -355,7 +355,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.1 }}
                   >
-                    User Name
+                  Pedro Morais
                   </motion.p>
                   <motion.p 
                     className="text-xs text-gray-500 dark:text-gray-400 truncate"
@@ -363,7 +363,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
                   >
-                    user@example.com
+                    pedromorais@gmail.com
                   </motion.p>
                 </motion.div>
               )}

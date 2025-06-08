@@ -14,7 +14,6 @@ import { getPipelineStatistics, getRecentPipelines } from "../../data/pipelines"
 import { getRepoStatistics } from "../../data/repos";
 import { users } from "../../data/users";
 
-// Helper function to create activity data for charts
 const createActivityData = () => {
   const data = [];
   const today = new Date();
@@ -33,7 +32,6 @@ const createActivityData = () => {
   return data;
 };
 
-// Create language distribution data
 const createLanguageData = () => {
   return [
     { name: "TypeScript", value: 45 },
@@ -44,7 +42,7 @@ const createLanguageData = () => {
   ];
 };
 
-// Create activities for list component
+// Create activities for ist component
 const createActivitiesList = () => {
   return [
     {
