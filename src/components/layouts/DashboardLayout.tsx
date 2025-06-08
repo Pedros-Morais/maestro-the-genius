@@ -21,20 +21,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
     router.push('/login');
   };
   
-  // Update active item based on current path
-  useEffect(() => {
-    const path = pathname || '/';
-    const matchedItem = navItems.find((item) => {
-      if (item.href === '/') {
-        return path === '/';
-      }
-      return path.startsWith(item.href);
-    });
-    if (matchedItem) {
-      setActiveItem(matchedItem.name);
-    }
-  }, [pathname]);
-
   const navItems = [
     {
       name: 'Dashboard',
@@ -86,6 +72,30 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       href: '/dashboard/integracoes'
     },
   ];
+
+  // Update active item based on current path
+  useEffect(() => {
+    const path = pathname || '/';
+    console.log('Current path:', path);
+    
+    // Direct mapping for exact matches
+    if (path === '/dashboard/pipelines') {
+      console.log('Pipeline path exact match');
+      setActiveItem('Pipelines');
+      return;
+    }
+    
+    const matchedItem = navItems.find((item) => {
+      const matches = item.href === '/' ? path === '/' : path.startsWith(item.href);
+      console.log(`Checking ${item.name} (${item.href}):`, matches);
+      return matches;
+    });
+    
+    if (matchedItem) {
+      console.log('Matched item:', matchedItem.name);
+      setActiveItem(matchedItem.name);
+    }
+  }, [pathname]);
 
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-white to-orange-50 dark:from-gray-900 dark:to-gray-800">
