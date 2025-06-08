@@ -30,7 +30,7 @@ export default function ActivityChart({
   title,
   description,
   type = "area",
-  colors = ["#8b5cf6", "#c4b5fd"],
+  colors = ["#f28500", "#ffb266"],
   dataKeys,
   labels = {},
 }: ActivityChartProps) {

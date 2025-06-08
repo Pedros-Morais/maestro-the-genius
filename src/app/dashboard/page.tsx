@@ -133,17 +133,14 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <DashboardLayout>
         <div className="flex items-center justify-center min-h-screen">
-          <div className="h-10 w-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="ml-3 text-purple-500 font-medium">Loading dashboard...</p>
+          <div className="h-10 w-10 border-4 border-[#f28500] border-t-transparent rounded-full animate-spin"></div>
+          <p className="ml-3 text-[#f28500] font-medium">Loading dashboard...</p>
         </div>
-      </DashboardLayout>
     );
   }
 
   return (
-    <DashboardLayout>
       <div className="p-6">
         {/* Dashboard header */}
         <motion.div
@@ -299,6 +296,5 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </DashboardLayout>
   );
 }

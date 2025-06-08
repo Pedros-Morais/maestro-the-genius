@@ -57,7 +57,7 @@ export default function ActivityList({ activities, title }: ActivityListProps) {
     switch (type) {
       case "commit":
         return (
-          <div className="bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-400 p-2 rounded-full">
+          <div className="bg-orange-50 dark:bg-orange-900/20 text-[#f28500] dark:text-orange-400 p-2 rounded-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"

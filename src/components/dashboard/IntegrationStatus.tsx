@@ -152,7 +152,7 @@ export default function IntegrationStatus({ integrations }: IntegrationStatusPro
               <div className="mt-1">
                 <div className="h-1.5 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
                   <motion.div
-                    className="h-full bg-purple-500"
+                    className="h-full bg-[#f28500]"
                     initial={{ width: 0 }}
                     animate={{ width: `${integration.connectionStrength}%` }}
                     transition={{ duration: 0.8, delay: 0.2 + index * 0.05 }}

@@ -13,11 +13,9 @@ export default function AuthGuard({ children }: AuthGuardProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
     
     if (!isLoggedIn) {
-      // Redirect to login page if not logged in
       router.push('/login');
     } else {
       setIsAuthenticated(true);
@@ -26,7 +24,6 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     setIsLoading(false);
   }, [router]);
 
-  // Show loading state while checking authentication
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#FFF8E1] to-[#FFECB3] dark:from-gray-900 dark:to-gray-800">

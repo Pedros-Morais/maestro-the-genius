@@ -121,7 +121,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.1 }}
                 >
-                  DevOps Hub
+                Maestro 
                 </motion.h1>
               </motion.div>
             ) : (
@@ -328,7 +328,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                 }}
               />
               <motion.span 
-                className="text-purple-700 dark:text-purple-300 font-medium relative z-10"
+                className="text-[#f28500] dark:text-orange-300 font-medium relative z-10"
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity, repeatType: "reverse" }}
                 whileHover={{ 

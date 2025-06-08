@@ -34,7 +34,7 @@ function RepoCard({ repo, onClick, onConnect }: RepoCardProps) {
       "C++": "bg-pink-500",
       C: "bg-gray-500",
       Ruby: "bg-red-600",
-      PHP: "bg-purple-400",
+      PHP: "bg-[#f28500]",
     };
     
     return colors[language] || "bg-gray-400";

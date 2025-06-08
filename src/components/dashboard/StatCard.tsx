@@ -18,12 +18,12 @@ export default function StatCard({
   icon,
   change,
   trend,
-  color = "purple",
+  color = "orange",
 }: StatCardProps) {
   const getColorClasses = () => {
     switch (color) {
       case "purple":
-        return "bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400";
+        return "bg-orange-50 text-[#f28500] dark:bg-orange-900/20 dark:text-orange-400";
       case "blue":
         return "bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400";
       case "green":
@@ -35,7 +35,7 @@ export default function StatCard({
       case "gray":
         return "bg-gray-50 text-gray-700 dark:bg-gray-900/20 dark:text-gray-400";
       default:
-        return "bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400";
+        return "bg-orange-50 text-[#f28500] dark:bg-orange-900/20 dark:text-orange-400";
     }
   };
 
